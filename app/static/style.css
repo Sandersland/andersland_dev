@@ -1,0 +1,317 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+body {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+    url(background.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+h2 {
+  font-size: 3rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+/* Header section */
+header {
+  position: fixed;
+  width: 80%;
+  top: 0px;
+  z-index: 1;
+}
+
+header nav {
+  min-height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header nav #logo, 
+header nav #links {
+  flex: 1;
+}
+
+header nav #links {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+header nav #links li {
+  display: inline;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+}
+
+.select {
+  position: absolute;
+  border: 1px solid #fff;
+  border-radius: .2em;
+  z-index: -2;
+  transform: scale(2)
+}
+/* Sections */
+section {
+  min-height: 100vh;
+}
+
+section:before { 
+  display: block; 
+  content: " "; 
+  height: 20vh; 
+  visibility: hidden; 
+  pointer-events: none;
+}
+
+section > h2,
+section > p,
+section > div {
+  margin-top: 2rem;
+}
+
+/* About Me Section */
+#it-me {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+#it-me img {
+  max-width: 200px;
+  height: auto;
+  border-radius: .5em;
+}
+
+#about-me {
+  margin-left: .5em;
+}
+
+#about-me p {
+  margin-top: .5em;
+}
+
+@media only screen and (max-width: 1024) {
+  #it-me {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #about-me {
+    margin-left: 0;
+  }
+}
+
+/* Projects section */
+.card-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.card {
+  margin-top: 2rem;
+  max-width: 40%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-image {
+  align-self: center;
+}
+
+.card-image img {
+  max-width: 200px;
+  height: auto;
+}
+
+.card-image img:hover {
+  animation: focus 1s ease-in-out infinite;
+}
+
+.card-description {
+  margin-top: .5em
+}
+
+/* Contact Me Section */
+
+form {
+  margin-top: 2rem;
+  max-width: 50%;
+}
+
+input, textarea {
+  outline: none;
+}
+
+::placeholder {
+  color: #F5F5F5;
+}
+
+input[type=text], input[type=email], textarea {
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  display: block;
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+}
+
+input[type=text]:focus, input[type=email]:focus, textarea:focus {
+  transform: scale(1.05);
+  border: 1px solid #F5F5F5
+} 
+
+@keyframes focus {
+  0% {
+    transform: scale(1)
+  }
+  
+  50% {
+    transform: scale(1.05)
+  }
+
+  100% {
+    transform: scale(1)
+  }
+}
+
+textarea {
+  resize: vertical
+}
+
+input[type=submit] {
+  background-color: #F5F5F5;
+  color: black;
+  font-weight: bold;
+  padding: 12px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: .5em;
+  box-shadow: 0px 8px 15px;
+}
+
+input[type=submit]:hover {
+  cursor: pointer;
+  animation: focus 1s ease-in-out infinite;
+}
+
+@media only screen and (max-width: 1024px) {
+  .card .card-image img:hover {
+    animation: none;
+  }
+
+  input[type=submit]:hover {
+    animation: none;
+  }
+}
+
+@media only screen 
+and (min-width: 768px) 
+and (max-width: 1024px) {
+
+  * {
+    font-size: 14px;
+  }
+
+  .select {
+    position: absolute;
+    border: 1px solid #fff;
+    border-radius: .2em;
+    z-index: -2;
+    transform: scale(1.5)
+  }
+
+  #it-me img:hover {
+    animation: none;
+  }
+
+}
+
+@media only screen 
+and (max-width: 768px) {
+
+  * {
+    font-size: 12px;
+  }
+
+  header nav {
+    display: block;
+    margin-top: 2rem;
+  }
+
+  header nav #logo {
+    display: none;
+  }
+
+  header nav #links {
+    margin: 6px; 
+  }
+
+  section::before {
+    height: 10vh;
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #it-me {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card-container {
+    flex-direction: column;
+    align-items: center;
+    max-height: 90vh;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.3);
+    box-shadow: inset 1px 1px 5px #555;
+  }
+
+  .card {
+    max-width: 80%;
+  }
+
+  .card:last-child {
+    margin-bottom: 2rem;
+  }
+
+  form {
+    max-width: 100%;
+  }
+
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ANDERSLAND.DEV</title>
+  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+  <script src="{{url_for('static', filename='script.js')}}"></script>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <nav>
+        <p id="logo">ANDERSLAND.DEV</p>
+        <ul id="links">
+          <li><a data-page="home" class="link" href="#home">Home</a></li>
+          <li><a data-page="about" class="link" href="#about">About</a></li>
+          <li><a data-page="projects" class="link" href="#projects">Projects</a></li>
+          <li><a data-page="contact" class="link" href="#contact">Contact</a></li>
+          <div class="select"></div>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="home" id="home">
+        <h1>Hi, my name is Steffen Andersland.</h1>
+        <h2>I am a self-taught software developer.</h2>
+      </section>
+      <section class="about" id="about">
+        <h1>About Me</h1>
+        <div id="it-me">
+          <a href="https://www.linkedin.com/in/sandersland/">
+            <img src="{{url_for('static', filename='me.png')}}" alt="Steffen Andersland">
+          </a>
+
+          <div id="about-me">
+            <p>My journey into the tech world started years ago while I was working as a buyer for a small manufacturing
+              company. When asked what it would take to have our ERP system automatically send custom reports to our
+              sales
+              staff at the end of
+              each month, I found the cost of outsourcing that work far too expensive.</p>
+
+            <p>Persuaded by my employer to find a solution, I rose to the challenge of learning what was required to
+              design
+              these reports in-house. In this time, I learned MySQL and basic programming concepts and software called
+              iReport. As time passed, more customizations were requested, and I eventually found myself using Python
+              and
+              fell in love with the language.</p>
+
+            <p>These days, the majority of my time is spent doing similar work in JavaScript within NetSuite's runtime
+              environment.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="projects" id="projects">
+        <h1>Current Projects</h1>
+        <div class="card-container">
+
+          <div class="card">
+            <a class="card-image" href="https://github.com/Sandersland/chromie"><img id="chromie-logo"
+                src="{{url_for('static', filename='chromie.png')}}" alt="chromie logo"></a>
+            <h3 class="card-title">chromie</h3>
+
+            <p class="card-description"><em>A simple utility CLI tool for packaging and maintaining chrome
+                extensions.</em></p>
+            <p class="card-description">The inspiration for this project came from my coworker's frustration
+              zipping and publishing chrome extensions to the chrome web store. It's shining feature is a pack command
+              that bundles everything required into a single .zip that can be uploaded into google's web
+              store.
+            </p>
+
+          </div>
+
+          <div class="card">
+            <a href="https://github.com/Sandersland/pylaunch" class="card-image"><img id="pylaunch-logo"
+                class="card-image" src="{{url_for('static', filename='pylaunch.png')}}" alt="pylaunch logo"></a>
+            <h3 class="card-title">pylaunch</h3>
+
+            <p class="card-description"><em>Lost your TV remote? No big deal.</em></p>
+            <p class="card-description">I have always had an interest in IoT, and when I learned that I could
+              make HTTP requests to my Roku TV, I immediately had a project on my hands. This project is far from
+              complete, but it's features are convenient, and I still use it everytime I sit down to watch NetFlix.</p>
+            <p class="card-description">Originally intended to be a library, this project audience is other
+              developers that want to discover and control their smart TV using Python. However, it does feature a GUI
+              that can be used by running roku init in the command line.</p>
+          </div>
+
+        </div> <!-- end card-container -->
+      </section>
+      <section class="contact" id="contact">
+        <h1>Contact Me</h1>
+        <form>
+          <input name="name" type="text" placeholder="Name" aria-label="Name" required>
+          <input name="email" type="email" placeholder="Email" aria-label="Email" required>
+          <textarea name="message" cols="30" rows="10" placeholder="Message" aria-label="Message" required></textarea>
+          <input type="submit" value="Submit">
+        </form>
+      </section>
+    </main>
+  </div>
+</body>
+
+</html>
