@@ -5,6 +5,8 @@ from flask import Flask, render_template, jsonify, request
 
 
 def create_app():
+    from app.api import api_bp
+
     app = Flask(__name__)
 
     settings = {
@@ -21,35 +23,21 @@ def create_app():
 
     @app.route("/", methods=["GET"])
     def index():
-        return render_template("index.html")
+        return render_template("index.html"), 200
 
-    @app.route("/message", methods=["POST"])
-    def message():
-        response = {}
-        data = request.json
+    app.register_blueprint(api_bp, url_prefix="/api")
 
-        subject = f"{data.get('name')} would like to contact you!"
-        to = app.config.get("MAIL_USERNAME")
-        _from = data.get("name")
+    @app.errorhandler(404)
+    def not_found(error):
+        return render_template("404.html"), 404
 
-        message = f"Subject: {subject}\n\n{data.get('message')}"
+    @app.errorhandler(405)
+    def not_allowed(error):
+        return render_template("405.html"), 405
 
-        try:
-            response["status"] = "success"
-            response["message"] = "email sent successfully"
-            server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
-            server.ehlo()
-            server.login(
-                app.config.get("MAIL_USERNAME"), app.config.get("MAIL_PASSWORD")
-            )
-            server.sendmail(_from, to, message)
-            server.close()
-            return jsonify(response), 200
-
-        except Exception as err:
-            response["status"] = "error"
-            response["message"] = str(err)
-            return jsonify(response), 500
+    @app.errorhandler(500)
+    def not_found(error):
+        return render_template("500.html"), 500
 
     return app
 

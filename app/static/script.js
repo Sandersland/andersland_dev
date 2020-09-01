@@ -34,12 +34,8 @@ const observe = (observables, callback, options) => {
   return observer;
 };
 
-const handleMessageSuccess = (data) => console.log(data);
-
-const handleMessageError = (data) => console.log(data);
-
 const sendMessage = (formData) => {
-  const url = `${window.location.origin}/message`;
+  const url = `${window.location.origin}/api/message`;
   const response = fetch(url, {
     method: "POST",
     headers: {
@@ -54,35 +50,63 @@ const sendMessage = (formData) => {
   });
 };
 
+const handleMessageSuccess = (data) => {
+  const nameField = document.querySelector("input[name=name]");
+  const emailField = document.querySelector("input[name=email]");
+  const subjectField = document.querySelector("input[name=subject]");
+  const messageField = document.querySelector("textarea[name=message]");
+  const submitButton = document.querySelector("input[type=submit]");
+  const loader = document.querySelector(".loader");
+
+  loader.classList.remove("visible");
+  nameField.value = "";
+  emailField.value = "";
+  subjectField.value = "";
+  messageField.value = "";
+  submitButton.disabled = false;
+  submitButton.style.cursor = "pointer";
+
+  // flash message success
+  console.log(data);
+};
+
+const handleMessageError = (data) => {
+  const loader = document.querySelector(".loader");
+  loader.classList.remove("visible");
+  submitButton.disabled = false;
+  submitButton.style.cursor = "pointer";
+
+  // flash error message
+  console.log(data);
+};
+
 const submitForm = (e) => {
   e.preventDefault();
   const nameField = document.querySelector("input[name=name]");
   const emailField = document.querySelector("input[name=email]");
+  const subjectField = document.querySelector("input[name=subject]");
   const messageField = document.querySelector("textarea[name=message]");
+  const submitButton = document.querySelector("input[type=submit]");
+  const loader = document.querySelector(".loader");
 
   const isValidEmail = emailField && emailField.checkValidity();
   const nameAndMessageFieldsHaveData = (
     nameField && nameField.checkValidity() &&
+    subjectField && subjectField.checkValidity() &&
     messageField && messageField.checkValidity()
   );
 
   if (isValidEmail && nameAndMessageFieldsHaveData) {
-    // make form button unclickable
+    submitButton.disabled = true;
+    submitButton.style.cursor = "not-allowed";
+
+    loader.classList.add("visible");
     sendMessage({
       name: nameField.value,
       email: emailField.value,
+      subject: subjectField.value,
       message: messageField.value,
-    }).then((resp) => {
-      // flash message success
-      // clear form
-      // make button clickable
-      // send confirmation email to form submitter???
-      console.log(resp);
-    }).catch((resp) => {
-      // flash error message
-      // make button clickable
-      console.log(resp);
-    });
+    }).then(handleMessageSuccess).catch(handleMessageSuccess);
   } else {
     if (!isValidEmail) {
       // flash message that email is invalid

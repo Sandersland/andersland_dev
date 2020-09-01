@@ -95,8 +95,17 @@
         <form>
           <input name="name" type="text" placeholder="Name" aria-label="Name" required>
           <input name="email" type="email" placeholder="Email" aria-label="Email" required>
+          <input name="subject" type="text" placeholder="Subject" aria-label="Subject" required>
           <textarea name="message" cols="30" rows="10" placeholder="Message" aria-label="Message" required></textarea>
-          <input type="submit" value="Submit">
+          <div class="form-submit">
+            <input type="submit" value="Submit">
+            <svg width="72" height="12" viewBox="0 0 72 12" fill="none" xmlns="http://www.w3.org/2000/svg"
+              class="loader">
+              <circle cx="6" cy="6" r="6" fill="#C4C4C4" />
+              <circle cx="36" cy="6" r="6" fill="#C4C4C4" />
+              <circle cx="66" cy="6" r="6" fill="#C4C4C4" />
+            </svg>
+          </div>
         </form>
       </section>
     </main>
