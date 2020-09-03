@@ -1,4 +1,23 @@
-document.addEventListener("DOMContentLoaded", main);
+const IMAGE_PLACEHOLDER = "https://plchldr.co/i/200";
+const MESSAGE_ENDPOINT = "api/message";
+
+const FormElement = {
+  ALL: "form > *[name]",
+  NAME_FIELD: "input[name=name]",
+  EMAIL_FIELD: "input[name=email]",
+  SUBJECT_FIELD: "input[name=subject]",
+  MESSAGE_FIELD: "textarea[name=message]",
+  SUBMIT_BUTTON: "input[type=submit]",
+  LOADER: ".loader",
+  VALIDATION_MESSAGE: ".validation-message",
+};
+
+const FormValidityMessage = {
+  valueMissing: (fieldName) =>
+    `Please enter a value for the ${fieldName} field.`,
+  typeMismatch: (fieldName) =>
+    `Please enter a correct value for the ${fieldName} field.`,
+};
 
 const getLeftOffset = (selectorText) => {
   const ruleArr = Array.from(document.styleSheets[0].rules);
@@ -35,7 +54,7 @@ const observe = (observables, callback, options) => {
 };
 
 const sendMessage = (formData) => {
-  const url = `${window.location.origin}/api/message`;
+  const url = `${window.location.origin}/${MESSAGE_ENDPOINT}`;
   const response = fetch(url, {
     method: "POST",
     headers: {
@@ -50,73 +69,110 @@ const sendMessage = (formData) => {
   });
 };
 
-const handleMessageSuccess = (data) => {
-  const nameField = document.querySelector("input[name=name]");
-  const emailField = document.querySelector("input[name=email]");
-  const subjectField = document.querySelector("input[name=subject]");
-  const messageField = document.querySelector("textarea[name=message]");
-  const submitButton = document.querySelector("input[type=submit]");
-  const loader = document.querySelector(".loader");
+const flashMessage = (message) => {
+  const validationMessageField = document.querySelector(
+    FormElement.VALIDATION_MESSAGE,
+  );
+  validationMessageField.classList.add("visible");
+  validationMessageField.textContent = message;
+};
 
-  loader.classList.remove("visible");
-  nameField.value = "";
-  emailField.value = "";
-  subjectField.value = "";
-  messageField.value = "";
+const flashValidationMessage = (field) => {
+  for (let key in field.validity) {
+    const result = field.validity[key];
+    if (result && key !== "valid") {
+      const message = FormValidityMessage[key](field.name);
+      flashMessage(message);
+    }
+  }
+};
+
+const handleMessageSuccess = (data) => {
+  const submitButton = document.querySelector(FormElement.SUBMIT_BUTTON);
+  document.querySelector(FormElement.LOADER).classList.remove("visible");
+  document.querySelector(FormElement.NAME_FIELD).value = "";
+  document.querySelector(FormElement.EMAIL_FIELD).value = "";
+  document.querySelector(FormElement.SUBJECT_FIELD).value = "";
+  document.querySelector(FormElement.MESSAGE_FIELD).value = "";
   submitButton.disabled = false;
   submitButton.style.cursor = "pointer";
 
-  // flash message success
-  console.log(data);
+  flashMessage(data.message);
 };
 
 const handleMessageError = (data) => {
-  const loader = document.querySelector(".loader");
-  loader.classList.remove("visible");
+  const submitButton = document.querySelector(FormElement.SUBMIT_BUTTON);
+  document.querySelector(FormElement.LOADER).classList.remove("visible");
   submitButton.disabled = false;
   submitButton.style.cursor = "pointer";
 
-  // flash error message
   console.log(data);
+  flashMessage("Something unexpected happened while sending your message.");
+};
+
+const debounce = (func, wait, immediate) => {
+  var timeout;
+  return function () {
+    var context = this, args = arguments;
+    var later = function () {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+};
+
+const clearValidationMessage = debounce((_) => {
+  const validationMessageField = document.querySelector(
+    FormElement.VALIDATION_MESSAGE,
+  );
+  validationMessageField.classList.remove("visible");
+}, 5000);
+
+const validateField = (e) => {
+  const field = e.target;
+  const fieldIsValid = field.checkValidity();
+
+  if (!fieldIsValid) {
+    field.setAttribute("data-invalid", "");
+    flashValidationMessage(field);
+  }
+};
+
+const validateForm = () => {
+  const form = document.querySelector("form");
+  return form.checkValidity();
+};
+
+const clearError = (e) => {
+  e.target.removeAttribute("data-invalid");
 };
 
 const submitForm = (e) => {
   e.preventDefault();
-  const nameField = document.querySelector("input[name=name]");
-  const emailField = document.querySelector("input[name=email]");
-  const subjectField = document.querySelector("input[name=subject]");
-  const messageField = document.querySelector("textarea[name=message]");
-  const submitButton = document.querySelector("input[type=submit]");
-  const loader = document.querySelector(".loader");
 
-  const isValidEmail = emailField && emailField.checkValidity();
-  const nameAndMessageFieldsHaveData = (
-    nameField && nameField.checkValidity() &&
-    subjectField && subjectField.checkValidity() &&
-    messageField && messageField.checkValidity()
-  );
+  const submitButton = document.querySelector(FormElement.SUBMIT_BUTTON);
+  const loader = document.querySelector(FormElement.LOADER);
+  const formIsValid = validateForm();
 
-  if (isValidEmail && nameAndMessageFieldsHaveData) {
+  if (formIsValid) {
     submitButton.disabled = true;
     submitButton.style.cursor = "not-allowed";
 
     loader.classList.add("visible");
     sendMessage({
-      name: nameField.value,
-      email: emailField.value,
-      subject: subjectField.value,
-      message: messageField.value,
+      name: document.querySelector(FormElement.NAME_FIELD).value,
+      email: document.querySelector(FormElement.EMAIL_FIELD).value,
+      subject: document.querySelector(FormElement.SUBJECT_FIELD).value,
+      message: document.querySelector(FormElement.MESSAGE_FIELD).value,
     }).then(handleMessageSuccess).catch(handleMessageSuccess);
-  } else {
-    if (!isValidEmail) {
-      // flash message that email is invalid
-    } else if (!nameAndMessageFieldsHaveData) {
-      // flash message that both name and message fields must have values
-    }
   }
 };
 
-function main() {
+document.addEventListener("DOMContentLoaded", () => {
   const sections = document.querySelectorAll("section");
 
   const selector = document.querySelector(".select");
@@ -129,17 +185,22 @@ function main() {
 
   observe(sections, selectorFn, options);
 
-  const submitButton = document.querySelector("input[type=submit]");
+  const submitButton = document.querySelector(FormElement.SUBMIT_BUTTON);
   submitButton.onclick = submitForm;
 
-  const projectImages = document.querySelectorAll(".card-image");
-
-  Array.from(projectImages).forEach((el) => {
+  Array.from(document.querySelectorAll(".card-image")).forEach((el) => {
     el.onerror = ({ target }) => {
-      target.src = `https://plchldr.co/i/200`;
+      target.src = IMAGE_PLACEHOLDER;
       target.style.padding = ".5em";
     };
   });
 
-  window.onresize = () => observe(sections, selectorFn, options);
-}
+  const inputFields = Array.from(document.querySelectorAll(FormElement.ALL));
+  inputFields.forEach((el) => {
+    el.addEventListener("input", clearError);
+    el.addEventListener("focusout", validateField);
+    el.addEventListener("focusout", clearValidationMessage);
+  });
+
+  window.onresize = observe(sections, selectorFn, options);
+});

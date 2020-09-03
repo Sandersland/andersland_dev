@@ -16,6 +16,7 @@ def create_app():
         "MAIL_USE_TLS": os.getenv("MAIL_USE_TLS"),
         "MAIL_USE_SSL": os.getenv("MAIL_USE_SSL"),
         "MAIL_USERNAME": os.getenv("MAIL_USERNAME"),
+        "MAIL_REPLY_TO": os.getenv("MAIL_REPLY_TO"),
         "MAIL_PASSWORD": os.getenv("MAIL_PASSWORD"),
     }
 
@@ -29,15 +30,18 @@ def create_app():
 
     @app.errorhandler(404)
     def not_found(error):
-        return render_template("404.html"), 404
+        data = {"error": "404", "message": "Not Found"}
+        return render_template("error.html", **data), 404
 
     @app.errorhandler(405)
     def not_allowed(error):
-        return render_template("405.html"), 405
+        data = {"error": "405", "message": "Not Allowed"}
+        return render_template("error.html", **data), 405
 
     @app.errorhandler(500)
     def not_found(error):
-        return render_template("500.html"), 500
+        data = {"error": "500", "message": "Server Error"}
+        return render_template("error.html", **data), 500
 
     return app
 

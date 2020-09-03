@@ -11,25 +11,36 @@ api_bp = Blueprint("api_bp", __name__)
 @api_bp.route("/message", methods=["POST"])
 def message():
     response = {}
+    content_type = request.headers.get("Content-Type")
+    data = request.json
+
+    if not content_type or content_type != "application/json":
+        response["status"] = "error"
+        response["message"] = "Bad Request"
+        return jsonify(response), 400
 
     config = current_app.config
     username = config.get("MAIL_USERNAME")
+    reply_to = config.get("MAIL_REPLY_TO")
     password = config.get("MAIL_PASSWORD")
     mail_server = config.get("MAIL_SERVER")
     mail_port = config.get("MAIL_PORT")
 
-    data = request.json
-    email = data.get("email")
-    name = data.get("name")
-    subject = data.get("subject")
-    message = data.get("message")
+    keys = ["email", "name", "subject", "message"]
+    values = [data.get(key) for key in keys]
+    if not all(values):
+        response["status"] = "error"
+        response["message"] = "Bad Request"
+        return jsonify(response), 400
 
     msg = MIMEMultipart("alternative")
-    msg["Subject"] = subject
+    msg.add_header("reply-to", reply_to)
+    msg["Subject"] = data["subject"]
     msg["From"] = f"andersland.dev <{username}>"
-    msg["To"] = username
+    msg["To"] = data["email"]
+    msg["Bcc"] = reply_to
 
-    text = f"Thank you, {name}! Thank you for your message. I'll be in touch!"
+    text = f"Hello {data['name']}, thank you for your message! I'll be in touch!"
     text_part = MIMEText(text, "plain")
     msg.attach(text_part)
 
@@ -40,7 +51,7 @@ def message():
 
     try:
         response["status"] = "success"
-        response["message"] = "email sent successfully"
+        response["message"] = "Your message was successfully sent."
         server = smtplib.SMTP_SSL(mail_server, mail_port)
         server.ehlo()
         server.login(username, password)

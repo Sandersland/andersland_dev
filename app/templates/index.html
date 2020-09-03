@@ -15,10 +15,10 @@
       <nav>
         <p id="logo">ANDERSLAND.DEV</p>
         <ul id="links">
-          <li><a data-page="home" class="link" href="#home">Home</a></li>
-          <li><a data-page="about" class="link" href="#about">About</a></li>
-          <li><a data-page="projects" class="link" href="#projects">Projects</a></li>
-          <li><a data-page="contact" class="link" href="#contact">Contact</a></li>
+          <li><a data-page="home" class="link" href="#home" tabindex="-1">Home</a></li>
+          <li><a data-page="about" class="link" href="#about" tabindex="-1">About</a></li>
+          <li><a data-page="projects" class="link" href="#projects" tabindex="-1">Projects</a></li>
+          <li><a data-page="contact" class="link" href="#contact" tabindex="-1">Contact</a></li>
           <div class="select"></div>
         </ul>
       </nav>
@@ -31,7 +31,7 @@
       <section class="about" id="about">
         <h1>About Me</h1>
         <div id="it-me">
-          <a href="https://www.linkedin.com/in/sandersland/">
+          <a href="https://www.linkedin.com/in/sandersland/" tabindex="-1">
             <img src="{{url_for('static', filename='me.png')}}" alt="Steffen Andersland">
           </a>
 
@@ -60,7 +60,7 @@
         <div class="card-container">
 
           <div class="card">
-            <a class="card-image" href="https://github.com/Sandersland/chromie"><img id="chromie-logo"
+            <a class="card-image" href="https://github.com/Sandersland/chromie" tabindex="-1"><img id="chromie-logo"
                 src="{{url_for('static', filename='chromie.png')}}" alt="chromie logo"></a>
             <h3 class="card-title">chromie</h3>
 
@@ -75,7 +75,7 @@
           </div>
 
           <div class="card">
-            <a href="https://github.com/Sandersland/pylaunch" class="card-image"><img id="pylaunch-logo"
+            <a href="https://github.com/Sandersland/pylaunch" class="card-image" tabindex="-1"><img id="pylaunch-logo"
                 class="card-image" src="{{url_for('static', filename='pylaunch.png')}}" alt="pylaunch logo"></a>
             <h3 class="card-title">pylaunch</h3>
 
@@ -97,6 +97,7 @@
           <input name="email" type="email" placeholder="Email" aria-label="Email" required>
           <input name="subject" type="text" placeholder="Subject" aria-label="Subject" required>
           <textarea name="message" cols="30" rows="10" placeholder="Message" aria-label="Message" required></textarea>
+          <p class="validation-message"></p>
           <div class="form-submit">
             <input type="submit" value="Submit">
             <svg width="72" height="12" viewBox="0 0 72 12" fill="none" xmlns="http://www.w3.org/2000/svg"

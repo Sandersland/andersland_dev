@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{error}}</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: black;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    canvas {
+      display: block;
+    }
+
+    div#message {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      z-index: 1;
+      height: 80%;
+      width: 100%;
+    }
+
+    div#message h1 {
+      color: #F5F5F5;
+      opacity: .8;
+    }
+
+    div#message button {
+      margin-top: 2em;
+      background-color: #F5F5F5;
+      color: black;
+      font-weight: bold;
+      padding: 12px 20px;
+      border: none;
+      border-radius: .5em;
+      box-shadow: 0px 8px 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="message">
+    <h1>{{error}} - {{message}}</h1>
+    <button onclick="window.location.href='/'">Home</button>
+  </div>
+  <canvas id="canvas"></canvas>
+  <script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    let matrix = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
+    matrix = matrix.split("");
+
+    const font_size = 10;
+    const columns = canvas.width / font_size;
+
+    const drops = [];
+
+    for (let x = 0; x < columns; x++)
+      drops[x] = 1;
+
+    function draw() {
+
+      ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#05a332";
+      ctx.font = font_size + "px arial";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = matrix[Math.floor(Math.random() * matrix.length)];
+        ctx.fillText(text, i * font_size, drops[i] * font_size);
+        if (drops[i] * font_size > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 35);
+
+  </script>
+</body>
+
+</html>
