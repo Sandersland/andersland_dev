@@ -35,7 +35,7 @@ def message():
 
     msg = MIMEMultipart("alternative")
     msg.add_header("reply-to", reply_to)
-    msg["Subject"] = data["subject"]
+    msg["Subject"] = "Message confirmation"
     msg["From"] = f"andersland.dev <{username}>"
     msg["To"] = data["email"]
     msg["Bcc"] = reply_to
