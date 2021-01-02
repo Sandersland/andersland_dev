@@ -288,6 +288,14 @@ and (max-width: 1024px) {
     transform: scale(1.5)
   }
 
+  #it-me {
+    align-items: center;
+  }
+
+  #it-me p:last-of-type {
+    margin-bottom: 1em;
+  }
+
   #it-me img:hover {
     animation: none;
   }
