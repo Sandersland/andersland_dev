@@ -19,19 +19,19 @@ body {
 }
 
 h1 {
-  font-size: 4rem;
+  font-size: 4em;
 }
 
 h2 {
-  font-size: 3rem;
+  font-size: 3em;
 }
 
 h3 {
-  font-size: 2rem;
+  font-size: 2em;
 }
 
 h4 {
-  font-size: 1.5rem;
+  font-size: 1.5em;
 }
 
 .container {
@@ -109,7 +109,9 @@ section > div {
 
 #it-me img {
   max-width: 200px;
-  margin: 1em;
+  margin-left: 1em;
+  margin-top: 1em;
+  align-self: center;
   height: auto;
   border-radius: .5em;
 }
@@ -122,10 +124,18 @@ section > div {
   margin-top: 1em;
 }
 
+#about-me p:last-of-type {
+  padding-bottom: 1em;
+}
+
 @media only screen and (max-width: 1024) {
   #it-me {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+  }
+
+  #it-me img {
+    margin-top: 0;
   }
 
   #about-me {
@@ -156,7 +166,6 @@ section > div {
 
 .card-image img {
   max-width: 200px;
-  height: auto;
 }
 
 .card-image img:hover {
@@ -334,7 +343,10 @@ and (max-width: 768px) {
   #it-me {
     flex-direction: column;
     align-items: center;
-    padding-bottom: 1em;
+  }
+
+  #it-me img {
+    padding-top: 1em;
   }
 
   .card-container {
