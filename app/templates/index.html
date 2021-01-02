@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Steffen Andersland, Software Developer">
   <title>ANDERSLAND.DEV</title>
   <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
   <script src="{{url_for('static', filename='script.js')}}"></script>
@@ -19,8 +20,8 @@
           <li><a data-page="about" class="link" href="#about" tabindex="-1">About</a></li>
           <li><a data-page="projects" class="link" href="#projects" tabindex="-1">Projects</a></li>
           <li><a data-page="contact" class="link" href="#contact" tabindex="-1">Contact</a></li>
-          <div class="select"></div>
         </ul>
+        <div class="select"></div>
       </nav>
     </header>
     <main>
@@ -58,7 +59,7 @@
           <div class="card">
             <a class="card-image" href="https://github.com/Sandersland/chromie" tabindex="-1"><img id="chromie-logo"
                 src="{{url_for('static', filename='chromie.png')}}" alt="chromie logo"></a>
-            <h3 class="card-title">chromie</h3>
+            <h2 class="card-title">chromie</h2>
 
             <p class="card-description"><em>A simple utility CLI tool for packaging and maintaining chrome
                 extensions.</em></p>
@@ -73,7 +74,7 @@
           <div class="card">
             <a href="https://github.com/Sandersland/pylaunch" class="card-image" tabindex="-1"><img id="pylaunch-logo"
                 class="card-image" src="{{url_for('static', filename='pylaunch.png')}}" alt="pylaunch logo"></a>
-            <h3 class="card-title">pylaunch</h3>
+            <h2 class="card-title">pylaunch</h2>
 
             <p class="card-description"><em>Lost your TV remote? No big deal.</em></p>
             <p class="card-description">I have always had an interest in IoT, and when I learned that I could
