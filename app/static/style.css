@@ -103,43 +103,37 @@ section > div {
 /* About Me Section */
 #it-me {
   display: flex;
-  flex-direction: row;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
 #it-me img {
   max-width: 200px;
-  margin-left: 1em;
-  margin-top: 1em;
+  margin: 1em 0 1em 1em;
   align-self: center;
   height: auto;
   border-radius: .5em;
 }
 
 #about-me {
-  margin: 0 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 1em;
 }
 
-#about-me p {
-  margin-top: 1em;
-}
-
-#about-me p:last-of-type {
-  padding-bottom: 1em;
+#about-me button {
+  max-width: 120px;
+  align-self: flex-end;
 }
 
 @media only screen and (max-width: 1024) {
   #it-me {
     flex-direction: column;
-    align-items: center;
   }
 
   #it-me img {
     margin-top: 0;
-  }
-
-  #about-me {
-    margin-left: 0;
+    align-self: center;
   }
 }
 
@@ -178,7 +172,7 @@ section > div {
 
 /* Contact Me Section */
 
-form {
+#contact form {
   margin-top: 2rem;
   max-width: 50%;
 }
@@ -196,7 +190,7 @@ input[type=text], input[type=email], textarea {
   color: white;
   display: block;
   width: 100%;
-  padding: 12px 20px;
+  padding: .5em 1em;
   margin: 8px 0;
 }
 
@@ -210,14 +204,15 @@ textarea {
   resize: vertical
 }
 
-input[type=submit] {
+input[type=submit], button {
   background-color: #F5F5F5;
   color: black;
   font-weight: bold;
-  padding: 12px 20px;
+  padding: .5em 1em;
   border: none;
   border-radius: .5em;
   box-shadow: 0px 8px 15px;
+  cursor: pointer;
 }
 
 input[type=submit]:hover {
@@ -297,9 +292,6 @@ and (max-width: 1024px) {
     transform: scale(1.5)
   }
 
-  #it-me {
-    align-items: center;
-  }
 
   #it-me p:last-of-type {
     margin-bottom: 1em;
@@ -346,7 +338,11 @@ and (max-width: 768px) {
   }
 
   #it-me img {
-    padding-top: 1em;
+    margin-right: 1em;
+  }
+
+  #about-me button {
+    margin: 1em 0;
   }
 
   .card-container {
