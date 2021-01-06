@@ -1,4 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@font-face {
+  font-family: 'Roboto';
+  src: local('./fonts/Roboto-Regular.ttf');
+  font-display: swap
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: local('./fonts/Roboto-Bold.ttf');
+  font-weight: bold;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: local('./fonts/Roboto-Italic.ttf');
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: local('./fonts/Roboto-BoldItalic.ttf');
+  font-size: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
 
 * {
   margin: 0;
@@ -107,6 +134,7 @@ section > div {
 }
 
 #it-me img {
+  max-height: 200px;
   max-width: 200px;
   margin: 1em 0 1em 1em;
   align-self: center;
@@ -159,7 +187,7 @@ section > div {
 }
 
 .card-image img {
-  max-width: 200px;
+  max-height: 200px;
 }
 
 .card-image img:hover {

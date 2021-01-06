@@ -1,4 +1,3 @@
-const IMAGE_PLACEHOLDER = "https://plchldr.co/i/200";
 const MESSAGE_ENDPOINT = "api/message";
 
 const FormElement = {
@@ -187,13 +186,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const submitButton = document.querySelector(FormElement.SUBMIT_BUTTON);
   submitButton.onclick = submitForm;
-
-  Array.from(document.querySelectorAll(".card-image")).forEach((el) => {
-    el.onerror = ({ target }) => {
-      target.src = IMAGE_PLACEHOLDER;
-      target.style.padding = ".5em";
-    };
-  });
 
   const inputFields = Array.from(document.querySelectorAll(FormElement.ALL));
   inputFields.forEach((el) => {
